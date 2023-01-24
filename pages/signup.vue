@@ -26,24 +26,24 @@
 </template>
 
 <script setup>
-import { createClient } from '@supabase/supabase-js'
 import { ref } from 'vue'
-
-const config = useRuntimeConfig()
-const supabaseUrl = 'https://hipydpadmuujyavkgdtr.supabase.co'
-const supabaseKey = config.supabaseKey
-const supabase = createClient(supabaseUrl, supabaseKey)
 
 const email = ref("")
 const password = ref("")
+const client = useSupabaseAuthClient()
 
 async function handleSignUp() {
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await client.auth.signUp({
   email: email.value,
   password: password.value,
   })
-  console.log("email", email.value)
-  console.log("response data", data)
+  
+  if (error) {
+    return alert('Something went wrong !')
+  }
+
+  console.log(data)
+  router.push('/')
 }
 
 </script>
