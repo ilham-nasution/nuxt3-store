@@ -4,18 +4,21 @@
 </template>
 
 <script setup>
-const client = useSupabaseAuthClient()
-const user = useSupabaseUser()
-const router = useRouter()
+const client = useSupabaseAuthClient();
+const user = useSupabaseUser();
 
 definePageMeta({
-  middleware: 'auth'
-})
+  middleware: "auth",
+});
+
+watchEffect(async () => {
+  if (!user.value) {
+    await navigateTo("/login");
+  }
+});
 
 async function handleLogout() {
-  const { error } = await client.auth.signOut()
+  const { error } = await client.auth.signOut();
   console.log(error);
-
-  router.push('/login')
 }
 </script>
