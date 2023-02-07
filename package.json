@@ -15,6 +15,7 @@
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.0.14",
     "@supabase/supabase-js": "^2.4.0",
     "daisyui": "^2.47.0"
   }
