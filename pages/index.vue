@@ -62,13 +62,26 @@
       </div>
     </div>
   </div>
+  <div class="container mx-auto">
+    <div class="grid grid-cols-3 gap-4">
+      <div v-for="product in products">
+        <ProductCard
+          :img="product.image_url"
+          :title="product.title"
+          :price="product.price"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { UserIcon } from "@heroicons/vue/24/outline";
+import { ref } from "vue";
 
-const client = useSupabaseAuthClient();
+const client = useSupabaseClient();
 const user = useSupabaseUser();
+const products = ref([]);
 
 definePageMeta({
   middleware: "auth",
@@ -84,4 +97,9 @@ async function handleLogout() {
   const { error } = await client.auth.signOut();
   console.log(error);
 }
+
+onMounted(async () => {
+  const { data } = await client.from("products").select("*");
+  products.value = data;
+});
 </script>
