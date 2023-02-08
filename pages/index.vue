@@ -3,11 +3,13 @@
   <div class="container mx-auto my-5">
     <div class="grid grid-cols-3 gap-4">
       <div v-for="product in products">
-        <ProductCard
-          :img="product.image_url"
-          :title="product.title"
-          :price="product.price"
-        />
+        <NuxtLink :to="'products/' + product.slug">
+          <ProductCard
+            :img="product.image_url"
+            :title="product.title"
+            :price="product.price"
+          />
+        </NuxtLink>
       </div>
     </div>
   </div>
