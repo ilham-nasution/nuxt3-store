@@ -1,5 +1,28 @@
 <template>
   <Navbar />
+  <input
+    type="text"
+    placeholder="Search"
+    class="input input-bordered input-primary w-full border-x-0"
+  />
+  <select class="select select-ghost w-36 focus:outline-none">
+    <option disabled selected>Brand</option>
+    <option v-for="brand in brands">
+      {{ brand.name }}
+    </option>
+  </select>
+  <select class="select select-ghost w-36 focus:outline-none">
+    <option disabled selected>Size</option>
+    <option v-for="size in sizes">
+      {{ size.size }}
+    </option>
+  </select>
+  <select class="select select-ghost w-36 focus:outline-none">
+    <option disabled selected>Color</option>
+    <option v-for="color in colors">
+      {{ color.name }}
+    </option>
+  </select>
   <div class="container mx-auto my-5">
     <div class="grid grid-cols-3 gap-4">
       <div v-for="product in products">
@@ -21,6 +44,9 @@ import { ref } from "vue";
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const products = ref([]);
+const brands = ref([]);
+const sizes = ref([]);
+const colors = ref([]);
 
 definePageMeta({
   middleware: "auth",
@@ -35,5 +61,11 @@ watchEffect(async () => {
 onMounted(async () => {
   const { data } = await client.from("products").select("*");
   products.value = data;
+  const { data: DBbrands } = await client.from("brands").select("name");
+  brands.value = DBbrands;
+  const { data: DBcolors } = await client.from("colors").select("name");
+  colors.value = DBcolors;
+  const { data: DBsizes } = await client.from("sizes").select("size");
+  sizes.value = DBsizes;
 });
 </script>

@@ -64,29 +64,6 @@
       </div>
     </div>
   </div>
-  <input
-    type="text"
-    placeholder="Search"
-    class="input input-bordered input-primary w-full border-x-0"
-  />
-  <select class="select select-ghost w-36 focus:outline-none">
-    <option disabled selected>Category</option>
-    <option>Svelte</option>
-    <option>Vue</option>
-    <option>React</option>
-  </select>
-  <select class="select select-ghost w-36 focus:outline-none">
-    <option disabled selected>Size</option>
-    <option>Svelte</option>
-    <option>Vue</option>
-    <option>React</option>
-  </select>
-  <select class="select select-ghost w-36 focus:outline-none">
-    <option disabled selected>Color</option>
-    <option>Svelte</option>
-    <option>Vue</option>
-    <option>React</option>
-  </select>
 </template>
 
 <script setup>
