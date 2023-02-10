@@ -1,5 +1,4 @@
 <template>
-  <Navbar />
   <input
     type="text"
     placeholder="Search"
