@@ -12,7 +12,7 @@
             <div class="w-6 rounded-full">
               <UserIcon />
             </div>
-            <span class="normal-case">{{ user.email }}</span>
+            <span class="normal-case">{{ user?.email }}</span>
           </div>
         </label>
         <ul

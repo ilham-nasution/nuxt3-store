@@ -65,6 +65,10 @@ const password = ref("");
 const authError = ref("");
 const client = useSupabaseAuthClient();
 
+definePageMeta({
+  layout: false,
+});
+
 async function handleSignUp() {
   const { error } = await client.auth.signUp({
     email: email.value,
