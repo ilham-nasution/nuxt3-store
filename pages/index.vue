@@ -23,13 +23,15 @@
     </option>
   </select>
   <div class="container mx-auto my-5">
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-4 gap-4">
       <div v-for="product in products">
         <NuxtLink :to="'products/' + product.slug">
           <ProductCard
             :img="product.image_url"
             :title="product.title"
             :price="product.price"
+            :shop-img="product.shops?.image_url"
+            :shop-name="product.shops?.name"
           />
         </NuxtLink>
       </div>
@@ -58,7 +60,8 @@ watchEffect(async () => {
 });
 
 onMounted(async () => {
-  const { data } = await client.from("products").select("*");
+  const { data } = await client.from("products").select(`*, shops (*)`);
+  console.log(data);
   products.value = data;
   const { data: DBbrands } = await client.from("brands").select("name");
   brands.value = DBbrands;

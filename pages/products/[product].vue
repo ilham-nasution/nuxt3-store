@@ -1,5 +1,4 @@
 <template>
-  <Navbar />
   <div class="container mx-auto my-5">
     <div class="card lg:card-side bg-base-100 shadow-xl">
       <figure class="w-full h-96">

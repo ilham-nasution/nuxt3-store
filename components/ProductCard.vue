@@ -4,6 +4,14 @@
       <img :src="img" alt="Shoes" class="object-cover" />
     </figure>
     <div class="card-body">
+      <div class="flex items-center">
+        <div class="avatar mr-3">
+          <div class="w-10 rounded-full">
+            <img :src="shopImg" />
+          </div>
+        </div>
+        <span>{{ shopName }}</span>
+      </div>
       <h2 class="card-title">{{ title }}</h2>
       <p>
         {{
@@ -14,9 +22,6 @@
           }).format(price)
         }}
       </p>
-      <div class="card-actions justify-end">
-        <button class="btn btn-primary">Buy Now</button>
-      </div>
     </div>
   </div>
 </template>
@@ -26,5 +31,7 @@ defineProps({
   img: String,
   title: String,
   price: Number,
+  shopName: String,
+  shopImg: String,
 });
 </script>
