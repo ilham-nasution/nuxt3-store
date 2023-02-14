@@ -6,7 +6,6 @@
         <li class="step" :class="{ 'step-primary': step === 2 }">
           Create Product
         </li>
-        <li class="step">Input Product</li>
       </ul>
     </div>
     <form v-show="step === 1" @submit.prevent="submitStore" class="my-5">
@@ -69,13 +68,10 @@
         <label class="label">
           <span class="label-text">Product Brand</span>
         </label>
-        <select class="select select-bordered">
-          <option disabled selected>Pick one</option>
-          <option>Star Wars</option>
-          <option>Harry Potter</option>
-          <option>Lord of the Rings</option>
-          <option>Planet of the Apes</option>
-          <option>Star Trek</option>
+        <select v-model="brandSelected" class="select select-bordered">
+          <option v-for="brand in brands" :value="brand.id">
+            {{ brand.name }}
+          </option>
         </select>
       </div>
       <div class="form-control w-full">
@@ -110,10 +106,23 @@ import { ref } from "vue";
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+const router = useRouter();
+
+const shopId = ref("");
 const storeName = ref("");
 const storeAddress = ref("");
 const storeImg = ref(null);
+const productName = ref("");
+const productDesc = ref("");
+const productPrice = ref("");
+const brandSelected = ref("");
 const step = ref(1);
+const brands = ref([]);
+
+onMounted(async () => {
+  const { data } = await client.from("brands").select("*");
+  brands.value = data;
+});
 
 const imgInput = (e) => {
   storeImg.value = e.target.files[0];
@@ -128,12 +137,51 @@ const submitStore = async () => {
     .from("avatars")
     .getPublicUrl(storeImg.value.name);
 
-  const { error } = await client.from("shops").insert([
+  const { data, error } = await client
+    .from("shops")
+    .insert([
+      {
+        image_url: image_url.data.publicUrl,
+        address: storeAddress.value,
+        name: storeName.value,
+        user_id: user.value.id,
+      },
+    ])
+    .select();
+
+  shopId.value = data[0].id;
+
+  if (error) {
+    alert("error creating");
+  }
+
+  step.value = 2;
+};
+
+const slugify = (str) =>
+  str
+    .toLowerCase()
+    .trim()
+    .replace(/[\s_-]+/g, "-");
+
+const submitProduct = async () => {
+  await client.storage
+    .from("products")
+    .upload(storeImg.value.name, storeImg.value);
+
+  const image_url = client.storage
+    .from("products")
+    .getPublicUrl(storeImg.value.name);
+
+  const { error } = await client.from("products").insert([
     {
       image_url: image_url.data.publicUrl,
-      address: storeAddress.value,
-      name: storeName.value,
-      user_id: user.value.id,
+      title: productName.value,
+      description: productDesc.value,
+      price: productPrice.value,
+      brand_id: brandSelected.value,
+      slug: slugify(productName.value),
+      shop_id: shopId.value,
     },
   ]);
 
@@ -141,6 +189,6 @@ const submitStore = async () => {
     alert("error creating");
   }
 
-  step.value = 2;
+  router.push("/");
 };
 </script>
