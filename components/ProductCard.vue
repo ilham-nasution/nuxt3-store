@@ -4,9 +4,11 @@
       <img :src="img" alt="Shoes" class="object-cover" />
     </figure>
     <div class="card-body">
-      <div class="flex items-center">
+      <div class="flex items-center mb-3">
         <div class="avatar mr-3">
-          <div class="w-10 rounded-full">
+          <div
+            class="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"
+          >
             <img :src="shopImg" />
           </div>
         </div>
