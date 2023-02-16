@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mx-auto mb-5">
     <h1 class="text-center font-bold text-3xl mb-8">Store Management</h1>
     <div class="flex items-center gap-5 mb-5">
       <div class="avatar">
@@ -30,6 +30,9 @@
         </div>
       </div>
     </div>
+    <NuxtLink :to="'/create-product/' + store.slug" class="btn btn-block"
+      >Add Product</NuxtLink
+    >
   </div>
 </template>
 
