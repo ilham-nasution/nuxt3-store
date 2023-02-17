@@ -16,19 +16,30 @@
     </div>
     <h1 class="font-bold text-xl mt-8">Product List</h1>
     <div class="grid grid-cols-2">
-      <div v-for="product in products" class="flex items-center gap-5 my-4">
-        <div class="avatar">
-          <div class="w-24 rounded">
-            <img class="!object-scale-down" :src="product.image_url" />
+      <TransitionGroup name="product">
+        <div
+          v-for="product in products"
+          :key="product.id"
+          class="flex items-center gap-5 my-4"
+        >
+          <div class="avatar">
+            <div class="w-24 rounded">
+              <img class="!object-scale-down" :src="product.image_url" />
+            </div>
+          </div>
+          <div>
+            <p class="text-xl">{{ product.title }}</p>
+            <p>{{ product.price }}</p>
+            <button class="btn btn-outline mr-3">Edit</button>
+            <button
+              @click="handleDeleteProduct(product.id, $event)"
+              class="btn btn-outline btn-warning"
+            >
+              Delete
+            </button>
           </div>
         </div>
-        <div>
-          <p class="text-xl">{{ product.title }}</p>
-          <p>{{ product.price }}</p>
-          <button class="btn btn-outline mr-3">Edit</button>
-          <button class="btn btn-outline btn-warning">Delete</button>
-        </div>
-      </div>
+      </TransitionGroup>
     </div>
     <NuxtLink :to="'/create-product/' + store.slug" class="btn btn-block"
       >Add Product</NuxtLink
@@ -58,4 +69,35 @@ onMounted(async () => {
 
   products.value = dbProducts;
 });
+
+const handleDeleteProduct = async (id) => {
+  const { error } = await client.from("products").delete().eq("id", id);
+
+  if (error) {
+    alert("error deleting");
+  } else {
+    const filteredproducts = products.value.filter((element) => {
+      return element.id != id;
+    });
+    products.value = filteredproducts;
+  }
+};
 </script>
+
+<style>
+.product-move,
+.product-enter-active,
+.product-leave-active {
+  transition: all 0.5s ease;
+}
+
+.product-enter-from,
+.product-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.product-leave-active {
+  position: absolute;
+}
+</style>
