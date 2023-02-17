@@ -26,7 +26,7 @@
 defineProps({
   img: String,
   title: String,
-  price: Number,
+  price: String,
   shopName: String,
   shopImg: String,
 });

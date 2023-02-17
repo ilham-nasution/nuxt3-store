@@ -65,11 +65,16 @@
 <script setup>
 import { UserIcon } from "@heroicons/vue/24/outline";
 
-const client = useSupabaseClient();
+const client = useSupabaseAuthClient();
 const user = useSupabaseUser();
 
 async function handleLogout() {
   const { error } = await client.auth.signOut();
-  console.log(error);
+
+  if (error) {
+    alert(error);
+  } else {
+    await navigateTo("/");
+  }
 }
 </script>

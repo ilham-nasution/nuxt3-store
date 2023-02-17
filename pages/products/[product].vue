@@ -2,7 +2,7 @@
   <div class="container mx-auto my-5">
     <div class="card lg:card-side bg-base-100 shadow-xl">
       <figure class="w-full h-96">
-        <img :src="product.image_url" alt="Album" />
+        <img :src="product.image_url" :alt="product.title" />
       </figure>
       <div class="card-body">
         <div class="flex justify-between">
