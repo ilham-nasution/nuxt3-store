@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto mb-5">
     <h1 class="text-center font-bold text-3xl mb-8">Store Management</h1>
-    <div class="flex items-center gap-5 mb-5">
+    <div class="flex items-center gap-5 mb-10">
       <div class="avatar">
         <div
           class="w-24 rounded ring ring-primary ring-offset-base-100 ring-offset-2"
@@ -14,7 +14,12 @@
         <p>{{ store.address }}</p>
       </div>
     </div>
-    <h1 class="font-bold text-xl mt-8">Product List</h1>
+    <div class="flex justify-between items-center border-b-2 py-3">
+      <h1 class="font-bold text-xl">Product List</h1>
+      <NuxtLink :to="'/create-product/' + store.slug" class="btn"
+        >Add Product</NuxtLink
+      >
+    </div>
     <div class="grid grid-cols-2">
       <TransitionGroup name="product">
         <div
@@ -41,9 +46,6 @@
         </div>
       </TransitionGroup>
     </div>
-    <NuxtLink :to="'/create-product/' + store.slug" class="btn btn-block"
-      >Add Product</NuxtLink
-    >
   </div>
 </template>
 
