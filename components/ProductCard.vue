@@ -16,13 +16,7 @@
       </div>
       <h2 class="card-title">{{ title }}</h2>
       <p>
-        {{
-          new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
-          }).format(price)
-        }}
+        {{ price }}
       </p>
     </div>
   </div>

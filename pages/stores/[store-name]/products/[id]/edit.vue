@@ -101,12 +101,6 @@ const imgInput = (e) => {
   productImgUrl.value = URL.createObjectURL(e.target.files[0]);
 };
 
-const slugify = (str) =>
-  str
-    .toLowerCase()
-    .trim()
-    .replace(/[\s_-]+/g, "-");
-
 const submitProduct = async () => {
   let image_url;
   if (productImg.value) {
@@ -127,7 +121,7 @@ const submitProduct = async () => {
       description: productDesc.value,
       price: productPrice.value,
       brand_id: brandSelected.value,
-      slug: slugify(productName.value),
+      slug: useSlugify(productName.value),
     })
     .eq("id", route.params.id);
 

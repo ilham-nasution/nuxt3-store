@@ -158,12 +158,6 @@ const submitStore = async () => {
   step.value = 2;
 };
 
-const slugify = (str) =>
-  str
-    .toLowerCase()
-    .trim()
-    .replace(/[\s_-]+/g, "-");
-
 const submitProduct = async () => {
   await client.storage
     .from("products")
@@ -180,7 +174,7 @@ const submitProduct = async () => {
       description: productDesc.value,
       price: productPrice.value,
       brand_id: brandSelected.value,
-      slug: slugify(productName.value),
+      slug: useSlugify(productName.value),
       shop_id: shopId.value,
     },
   ]);

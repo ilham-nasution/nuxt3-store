@@ -8,13 +8,7 @@
         <div class="flex justify-between">
           <h1 class="text-4xl font-bold">{{ product.title }}</h1>
           <h1 class="text-4xl font-bold">
-            {{
-              new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                minimumFractionDigits: 0,
-              }).format(product.price)
-            }}
+            {{ useCurrencyIDR(product.price) }}
           </h1>
         </div>
         <p>{{ product.description }}</p>

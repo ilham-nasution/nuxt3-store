@@ -34,7 +34,7 @@
           </div>
           <div>
             <p class="text-xl">{{ product.title }}</p>
-            <p>{{ product.price }}</p>
+            <p class="mb-2">{{ useCurrencyIDR(product.price) }}</p>
             <NuxtLink
               :to="
                 '/stores/' + store.slug + '/products/' + product.id + '/edit'

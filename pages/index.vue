@@ -29,7 +29,7 @@
           <ProductCard
             :img="product.image_url"
             :title="product.title"
-            :price="product.price"
+            :price="useCurrencyIDR(product.price)"
             :shop-img="product.shops?.image_url"
             :shop-name="product.shops?.name"
           />
@@ -61,7 +61,6 @@ watchEffect(async () => {
 
 onMounted(async () => {
   const { data } = await client.from("products").select(`*, shops (*)`);
-  console.log(data);
   products.value = data;
   const { data: DBbrands } = await client.from("brands").select("name");
   brands.value = DBbrands;
