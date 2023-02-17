@@ -16,7 +16,7 @@
     </div>
     <div class="flex justify-between items-center border-b-2 py-3">
       <h1 class="font-bold text-xl">Product List</h1>
-      <NuxtLink :to="'/create-product/' + store.slug" class="btn"
+      <NuxtLink :to="'/stores/' + store.slug + '/products/create'" class="btn"
         >Add Product</NuxtLink
       >
     </div>
@@ -35,7 +35,13 @@
           <div>
             <p class="text-xl">{{ product.title }}</p>
             <p>{{ product.price }}</p>
-            <button class="btn btn-outline mr-3">Edit</button>
+            <NuxtLink
+              :to="
+                '/stores/' + store.slug + '/products/' + product.id + '/edit'
+              "
+              class="btn btn-outline mr-3"
+              >Edit</NuxtLink
+            >
             <button
               @click="handleDeleteProduct(product.id, $event)"
               class="btn btn-outline btn-warning"
