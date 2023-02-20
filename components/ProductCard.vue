@@ -22,12 +22,14 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  img: String,
-  title: String,
-  price: String,
-  shopName: String,
-  shopImg: String,
-});
+<script setup lang="ts">
+interface Props {
+  img: string;
+  title: string;
+  price: string;
+  shopName: string;
+  shopImg: string;
+}
+
+defineProps<Props>();
 </script>

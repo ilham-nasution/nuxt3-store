@@ -20,7 +20,9 @@
       </label>
       <input
         :value="productName"
-        @input="$emit('update:productName', $event.target.value)"
+        @input="
+          $emit('update:productName', ($event.target as HTMLInputElement).value)
+        "
         type="text"
         class="input input-bordered w-full"
       />
@@ -31,7 +33,12 @@
       </label>
       <select
         :value="productBrand"
-        @change="$emit('update:productBrand', $event.target.value)"
+        @change="
+          $emit(
+            'update:productBrand',
+            ($event.target as HTMLInputElement).value
+          )
+        "
         class="select select-bordered"
       >
         <option v-for="brand in brands" :value="brand.id">
@@ -45,7 +52,9 @@
       </label>
       <textarea
         :value="productDesc"
-        @input="$emit('update:productDesc', $event.target.value)"
+        @input="
+          $emit('update:productDesc', ($event.target as HTMLInputElement).value)
+        "
         type="text"
         class="textarea textarea-bordered w-full"
       />
@@ -56,7 +65,12 @@
       </label>
       <input
         :value="productPrice"
-        @input="$emit('update:productPrice', $event.target.value)"
+        @input="
+          $emit(
+            'update:productPrice',
+            ($event.target as HTMLInputElement).value
+          )
+        "
         type="number"
         class="input input-bordered w-full"
       />
@@ -65,27 +79,34 @@
   </form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
-defineProps({
-  step: Number,
-  productName: String,
-  productDesc: String,
-  productPrice: String,
-  productBrand: String,
-});
+interface Props {
+  step: number;
+  productName: string;
+  productDesc: string;
+  productPrice: string;
+  productBrand: string;
+}
 
-defineEmits([
-  "submitProduct",
-  "imgInput",
-  "update:productName",
-  "update:productDesc",
-  "update:productPrice",
-  "update:productBrand",
-]);
+defineProps<Props>();
 
-const brands = ref([]);
+defineEmits<{
+  (e: "submitStore"): void;
+  (e: "imgInput"): void;
+  (e: "update:productName"): void;
+  (e: "update:productDesc"): void;
+  (e: "update:productPrice"): void;
+  (e: "update:productBrand"): void;
+}>();
+
+interface brand {
+  id: number;
+  name: string;
+}
+
+const brands = ref<brand[] | null>([]);
 
 const client = useSupabaseClient();
 

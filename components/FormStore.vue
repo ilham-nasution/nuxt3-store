@@ -16,7 +16,9 @@
       </label>
       <input
         :value="storeName"
-        @input="$emit('update:storeName', $event.target.value)"
+        @input="
+          $emit('update:storeName', ($event.target as HTMLInputElement).value)
+        "
         type="text"
         class="input input-bordered w-full"
       />
@@ -27,7 +29,12 @@
       </label>
       <input
         :value="storeAddress"
-        @input="$emit('update:storeAddress', $event.target.value)"
+        @input="
+          $emit(
+            'update:storeAddress',
+            ($event.target as HTMLInputElement).value
+          )
+        "
         type="text"
         class="input input-bordered w-full"
       />
@@ -36,17 +43,19 @@
   </form>
 </template>
 
-<script setup>
-defineProps({
-  step: Number,
-  storeName: String,
-  storeAddress: String,
-});
+<script setup lang="ts">
+interface Props {
+  step: number;
+  storeName: string;
+  storeAddress: string;
+}
 
-defineEmits([
-  "submitStore",
-  "imgInput",
-  "update:storeName",
-  "update:storeAddress",
-]);
+defineProps<Props>();
+
+defineEmits<{
+  (e: "submitStore"): void;
+  (e: "imgInput"): void;
+  (e: "update:storeName"): void;
+  (e: "update:storeAddress"): void;
+}>();
 </script>

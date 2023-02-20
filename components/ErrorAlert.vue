@@ -19,8 +19,10 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  errorMsg: String,
-});
+<script setup lang="ts">
+interface Props {
+  errorMsg: String;
+}
+
+defineProps<Props>();
 </script>
