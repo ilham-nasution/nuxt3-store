@@ -40,13 +40,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
-const email = ref("");
-const password = ref("");
-const authError = ref("");
+const email = ref<string>("");
+const password = ref<string>("");
+const authError = ref<string>("");
 const client = useSupabaseAuthClient();
+const user = useSupabaseUser();
+
+watchEffect(async () => {
+  if (user.value) {
+    await navigateTo("/");
+  }
+});
 
 definePageMeta({
   layout: false,
@@ -61,7 +68,5 @@ async function handleSignUp() {
   if (error) {
     authError.value = error.message;
   }
-
-  router.push("/");
 }
 </script>

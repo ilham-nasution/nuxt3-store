@@ -42,16 +42,16 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 
 definePageMeta({
   layout: false,
 });
 
-const email = ref("");
-const password = ref("");
-const authError = ref("");
+const email = ref<string>("");
+const password = ref<string>("");
+const authError = ref<string>("");
 const client = useSupabaseAuthClient();
 const user = useSupabaseUser();
 
