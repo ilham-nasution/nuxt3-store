@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <h1 class="text-3xl font-bold">Choose your store</h1>
+    <h1 v-if="stores.length" class="text-3xl font-bold">Choose your store</h1>
     <div class="flex justify-center items-center">
       <NuxtLink
         v-for="store in stores"
@@ -20,7 +20,10 @@
         <p class="text-xl mt-3">{{ store.name }}</p>
       </NuxtLink>
     </div>
-    <h1 class="text-3xl font-bold">Or</h1>
+    <h1 v-if="stores.length" class="text-3xl font-bold">Or</h1>
+    <h1 v-if="!stores.length" class="text-3xl font-bold">
+      You don't have any store
+    </h1>
     <NuxtLink to="/create-store" class="btn btn-outline mt-5"
       >Create Store</NuxtLink
     >
@@ -33,7 +36,7 @@ const user = useSupabaseUser();
 
 const stores = ref("");
 
-onMounted(async () => {
+await useAsyncData("stores", async () => {
   const { data } = await client
     .from("shops")
     .select("*")
