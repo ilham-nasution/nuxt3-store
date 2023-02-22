@@ -12,10 +12,8 @@
           </h1>
         </div>
         <p>{{ product.description }}</p>
-        <p>color</p>
-        <p>size</p>
         <div class="card-actions justify-end">
-          <button class="btn btn-primary">Buy</button>
+          <button @click="handleCart" class="btn btn-primary">Buy</button>
         </div>
       </div>
     </div>
@@ -24,8 +22,11 @@
 
 <script setup>
 const client = useSupabaseClient();
+const user = useSupabaseUser();
 const route = useRoute();
 const product = ref({});
+const cartCounter = useCartCounter();
+const cartTotal = useCartTotal();
 
 onMounted(async () => {
   const { data } = await client
@@ -34,4 +35,24 @@ onMounted(async () => {
     .eq("slug", route.params.product);
   product.value = data[0];
 });
+
+const handleCart = async () => {
+  cartCounter.value++;
+  cartTotal.value = cartTotal.value + product.value.price;
+
+  await useAsyncData("cart", async () => {
+    await client.from("user_carts").upsert(
+      {
+        user_id: user.value.id,
+        total_item: cartCounter.value,
+        total_price: cartTotal.value,
+      },
+      { onConflict: "user_id" }
+    );
+    await client.from("user_cart_products").insert({
+      user_id: user.value.id,
+      product_id: product.value.id,
+    });
+  });
+};
 </script>
