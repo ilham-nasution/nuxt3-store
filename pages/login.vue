@@ -28,8 +28,12 @@
             />
           </div>
           <div class="card-actions justify-center my-3">
-            <button type="submit" class="btn btn-block btn-primary">
-              Sign in
+            <button
+              type="submit"
+              class="btn btn-block btn-primary"
+              :class="{ loading: isLoading }"
+            >
+              {{ isLoading ? "" : "sign in" }}
             </button>
           </div>
           <p class="text-center">
@@ -49,11 +53,13 @@ definePageMeta({
   layout: false,
 });
 
+const client = useSupabaseAuthClient();
+const user = useSupabaseUser();
+
 const email = ref<string>("");
 const password = ref<string>("");
 const authError = ref<string>("");
-const client = useSupabaseAuthClient();
-const user = useSupabaseUser();
+const isLoading = ref<boolean>(false);
 
 watchEffect(async () => {
   if (user.value) {
@@ -62,12 +68,14 @@ watchEffect(async () => {
 });
 
 async function handleSignIn() {
+  isLoading.value = true;
   const { error } = await client.auth.signInWithPassword({
     email: email.value,
     password: password.value,
   });
 
   if (error) {
+    isLoading.value = false;
     authError.value = "invalid email or password";
   }
 }

@@ -26,8 +26,12 @@
             />
           </div>
           <div class="card-actions justify-center my-3">
-            <button type="submit" class="btn btn-block btn-primary">
-              Signup
+            <button
+              type="submit"
+              class="btn btn-block btn-primary"
+              :class="{ loading: isLoading }"
+            >
+              {{ isLoading ? "" : "sign up" }}
             </button>
           </div>
           <p class="text-center">
@@ -43,11 +47,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+const client = useSupabaseAuthClient();
+const user = useSupabaseUser();
+
 const email = ref<string>("");
 const password = ref<string>("");
 const authError = ref<string>("");
-const client = useSupabaseAuthClient();
-const user = useSupabaseUser();
+const isLoading = ref<boolean>(false);
 
 watchEffect(async () => {
   if (user.value) {
@@ -60,6 +66,7 @@ definePageMeta({
 });
 
 async function handleSignUp() {
+  isLoading.value = true;
   const { error } = await client.auth.signUp({
     email: email.value,
     password: password.value,
@@ -67,6 +74,7 @@ async function handleSignUp() {
 
   if (error) {
     authError.value = error.message;
+    isLoading.value = false;
   }
 }
 </script>
