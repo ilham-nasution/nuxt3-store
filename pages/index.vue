@@ -1,7 +1,9 @@
 <template>
   <input
+    v-model="keyword"
+    @keyup.enter="handleSearch"
     type="text"
-    placeholder="Search"
+    placeholder="Search by name"
     class="input input-bordered input-primary w-full border-x-0"
   />
   <select
@@ -81,6 +83,7 @@ const brands = ref<Brand[] | null>([]);
 const sizes = ref<Size[] | null>([]);
 const colors = ref<Color[] | null>([]);
 const brandSelected = ref(null);
+const keyword = ref<string>("");
 
 definePageMeta({
   middleware: "auth",
@@ -115,9 +118,17 @@ const handleFilterBrand = async () => {
     products.value = data;
   }
 };
+
+const handleSearch = async () => {
+  const { data } = await client
+    .from("products")
+    .select(`*, shops (*)`)
+    .ilike("title", `%${keyword.value}%`);
+  products.value = data;
+};
 </script>
 
-<style>
+<style scoped>
 .product-move,
 .product-enter-active,
 .product-leave-active {
