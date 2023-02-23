@@ -10,7 +10,12 @@
         <div class="text-center">
           <div class="avatar">
             <div class="w-24 rounded">
-              <img class="!object-scale-down" :src="productImgUrl" />
+              <nuxt-img
+                format="webp"
+                class="!object-scale-down"
+                :src="productImgUrl"
+                alt="product"
+              />
             </div>
           </div>
         </div>

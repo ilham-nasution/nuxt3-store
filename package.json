@@ -8,9 +8,10 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
     "@nuxtjs/supabase": "^0.3.0",
     "autoprefixer": "^10.4.13",
-    "nuxt": "3.0.0",
+    "nuxt": "^3.2.2",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4"
   },

@@ -6,7 +6,12 @@
         <div
           class="w-24 rounded ring ring-primary ring-offset-base-100 ring-offset-2"
         >
-          <img class="!object-scale-down" :src="store.image_url" />
+          <nuxt-img
+            format="webp"
+            class="!object-scale-down"
+            :src="store.image_url"
+            :alt="store.name"
+          />
         </div>
       </div>
       <div>
@@ -29,7 +34,12 @@
         >
           <div class="avatar">
             <div class="w-24 rounded">
-              <img class="!object-scale-down" :src="product.image_url" />
+              <nuxt-img
+                format="webp"
+                class="!object-scale-down"
+                :src="product.image_url"
+                :alt="product.title"
+              />
             </div>
           </div>
           <div>
@@ -62,7 +72,7 @@ const client = useSupabaseClient();
 const store = ref({});
 const products = ref([]);
 
-onMounted(async () => {
+await useAsyncData("shop", async () => {
   const { data } = await client
     .from("shops")
     .select("*")

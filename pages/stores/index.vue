@@ -11,9 +11,11 @@
           <div
             class="w-36 rounded ring ring-primary ring-offset-base-100 ring-offset-2"
           >
-            <img
+            <nuxt-img
+              format="webp"
               class="!object-scale-down hover:scale-125 hover:duration-700"
               :src="store.image_url"
+              :alt="store.name"
             />
           </div>
         </div>

@@ -7,5 +7,8 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  modules: ["@nuxtjs/supabase"],
+  modules: ["@nuxtjs/supabase", "@nuxt/image-edge"],
+  image: {
+    domains: ["https://hipydpadmuujyavkgdtr.supabase.co"],
+  },
 });

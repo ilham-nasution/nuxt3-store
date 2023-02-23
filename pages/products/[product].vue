@@ -9,7 +9,12 @@
           class="w-full h-96"
           :class="{ 'animate-pulse bg-slate-200 h-96 w-96': isLoading }"
         >
-          <img :src="product.image_url" :alt="product.title" />
+          <nuxt-img
+            v-if="!isLoading"
+            format="webp"
+            :src="product.image_url"
+            :alt="product.title"
+          />
         </figure>
         <div class="card-body">
           <div class="flex justify-between">
