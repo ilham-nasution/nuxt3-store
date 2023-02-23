@@ -2,7 +2,7 @@
   <div class="navbar bg-base-100">
     <div class="flex-1">
       <NuxtLink to="/" class="btn btn-ghost normal-case text-xl"
-        >Store</NuxtLink
+        >Shoe Commerce</NuxtLink
       >
     </div>
     <div v-if="user" class="flex-none">

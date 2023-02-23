@@ -1,51 +1,56 @@
 <template>
-  <input
-    v-model="keyword"
-    @keyup.enter="handleSearch"
-    type="text"
-    placeholder="Search by name"
-    class="input input-bordered input-primary w-full border-x-0"
-  />
-  <select
-    @change="handleFilterBrand"
-    class="select select-ghost w-36 focus:outline-none"
-    v-model="brandSelected"
-  >
-    <option disabled selected value="null">Brand</option>
-    <option>All</option>
-    <option v-for="brand in brands" :value="brand.id">
-      {{ brand.name }}
-    </option>
-  </select>
-  <select class="select select-ghost w-36 focus:outline-none">
-    <option disabled selected>Size</option>
-    <option>All</option>
-    <option v-for="size in sizes">
-      {{ size.size }}
-    </option>
-  </select>
-  <select class="select select-ghost w-36 focus:outline-none">
-    <option disabled selected>Color</option>
-    <option>All</option>
-    <option v-for="color in colors">
-      {{ color.name }}
-    </option>
-  </select>
-  <div class="container mx-auto my-5">
-    <div class="grid grid-cols-4 gap-4">
-      <TransitionGroup name="product">
-        <div v-for="product in products" :key="product.id">
-          <NuxtLink :to="'products/' + product.slug">
-            <ProductCard
-              :img="product.image_url"
-              :title="product.title"
-              :price="useCurrencyIDR(product.price)"
-              :shop-img="product.shops?.image_url"
-              :shop-name="product.shops?.name"
-            />
-          </NuxtLink>
-        </div>
-      </TransitionGroup>
+  <div>
+    <Head>
+      <Title>Shoe Commerce</Title>
+    </Head>
+    <input
+      v-model="keyword"
+      @keyup.enter="handleSearch"
+      type="text"
+      placeholder="Search by name"
+      class="input input-bordered input-primary w-full border-x-0"
+    />
+    <select
+      @change="handleFilterBrand"
+      class="select select-ghost w-36 focus:outline-none"
+      v-model="brandSelected"
+    >
+      <option disabled selected value="null">Brand</option>
+      <option>All</option>
+      <option v-for="brand in brands" :value="brand.id">
+        {{ brand.name }}
+      </option>
+    </select>
+    <select class="select select-ghost w-36 focus:outline-none">
+      <option disabled selected>Size</option>
+      <option>All</option>
+      <option v-for="size in sizes">
+        {{ size.size }}
+      </option>
+    </select>
+    <select class="select select-ghost w-36 focus:outline-none">
+      <option disabled selected>Color</option>
+      <option>All</option>
+      <option v-for="color in colors">
+        {{ color.name }}
+      </option>
+    </select>
+    <div class="container mx-auto my-5">
+      <div class="grid grid-cols-4 gap-4">
+        <TransitionGroup name="product">
+          <div v-for="product in products" :key="product.id">
+            <NuxtLink :to="'products/' + product.slug">
+              <ProductCard
+                :img="product.image_url"
+                :title="product.title"
+                :price="useCurrencyIDR(product.price)"
+                :shop-img="product.shops?.image_url"
+                :shop-name="product.shops?.name"
+              />
+            </NuxtLink>
+          </div>
+        </TransitionGroup>
+      </div>
     </div>
   </div>
 </template>
@@ -128,9 +133,5 @@ const handleSearch = async () => {
 .product-leave-to {
   opacity: 0;
   transform: translateX(30px);
-}
-
-.product-leave-active {
-  position: absolute;
 }
 </style>
