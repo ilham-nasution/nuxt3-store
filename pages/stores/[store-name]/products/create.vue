@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <h1 class="text-center text-5xl font-bold">Create product</h1>
+    <h1 class="text-center text-2xl md:text-5xl font-bold">Create product</h1>
 
     <form @submit.prevent="submitProduct" class="my-5">
       <div class="form-control w-full">

@@ -17,7 +17,7 @@
           />
         </figure>
         <div class="card-body">
-          <div class="flex justify-between">
+          <div class="flex flex-col md:flex-row md:justify-between">
             <h1
               class="text-2xl lg:text-4xl font-bold"
               :class="{ 'animate-pulse bg-slate-200 h-10 w-72': isLoading }"
