@@ -21,7 +21,11 @@
         tabindex="0"
         class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
       >
-        <li><NuxtLink to="/stores">Store Management</NuxtLink></li>
+        <li>
+          <NuxtLink @click="handleDropdown" to="/stores"
+            >Store Management</NuxtLink
+          >
+        </li>
         <li v-if="user"><a @click="handleLogout">Logout</a></li>
       </ul>
     </div>
@@ -45,7 +49,9 @@
           class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
-            <NuxtLink to="/stores">Store Management</NuxtLink>
+            <NuxtLink to="/stores" @click="handleDropdown"
+              >Store Management</NuxtLink
+            >
           </li>
           <li><a @click="handleLogout">Logout</a></li>
         </ul>
@@ -111,6 +117,7 @@ await useAsyncData("cart", async () => {
 });
 
 async function handleLogout() {
+  document.activeElement.blur();
   const { error } = await client.auth.signOut();
 
   if (error) {
@@ -119,4 +126,8 @@ async function handleLogout() {
     await navigateTo("/");
   }
 }
+
+const handleDropdown = () => {
+  document.activeElement.blur();
+};
 </script>
