@@ -77,23 +77,12 @@ interface Product {
 }
 
 const client = useSupabaseClient();
-const user = useSupabaseUser();
 const products = ref<Product[] | null>([]);
 const brands = ref<Brand[] | null>([]);
 const sizes = ref<Size[] | null>([]);
 const colors = ref<Color[] | null>([]);
 const brandSelected = ref(null);
 const keyword = ref<string>("");
-
-definePageMeta({
-  middleware: "auth",
-});
-
-watchEffect(async () => {
-  if (!user.value) {
-    await navigateTo("/login");
-  }
-});
 
 onMounted(async () => {
   const { data } = await client.from("products").select(`*, shops (*)`);

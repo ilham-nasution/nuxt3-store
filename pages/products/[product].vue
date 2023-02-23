@@ -74,22 +74,26 @@ onMounted(async () => {
 });
 
 const handleCart = async () => {
-  cartCounter.value++;
-  cartTotal.value = cartTotal.value + product.value.price;
+  if (!user.value) {
+    await navigateTo("/login");
+  } else {
+    cartCounter.value++;
+    cartTotal.value = cartTotal.value + product.value.price;
 
-  await useAsyncData("cart", async () => {
-    await client.from("user_carts").upsert(
-      {
+    await useAsyncData("cart", async () => {
+      await client.from("user_carts").upsert(
+        {
+          user_id: user.value.id,
+          total_item: cartCounter.value,
+          total_price: cartTotal.value,
+        },
+        { onConflict: "user_id" }
+      );
+      await client.from("user_cart_products").insert({
         user_id: user.value.id,
-        total_item: cartCounter.value,
-        total_price: cartTotal.value,
-      },
-      { onConflict: "user_id" }
-    );
-    await client.from("user_cart_products").insert({
-      user_id: user.value.id,
-      product_id: product.value.id,
+        product_id: product.value.id,
+      });
     });
-  });
+  }
 };
 </script>

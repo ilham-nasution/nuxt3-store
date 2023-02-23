@@ -30,6 +30,10 @@
 <script setup>
 import { ref } from "vue";
 
+definePageMeta({
+  middleware: "auth",
+});
+
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const router = useRouter();

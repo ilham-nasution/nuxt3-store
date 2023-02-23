@@ -5,7 +5,7 @@
         >Store</NuxtLink
       >
     </div>
-    <div class="flex-none">
+    <div v-if="user" class="flex-none">
       <div class="dropdown dropdown-end">
         <label tabindex="0" class="btn btn-ghost">
           <div class="flex items-center">
@@ -60,6 +60,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <NuxtLink to="/login" class="btn btn-ghost">Login</NuxtLink>
     </div>
   </div>
 </template>
