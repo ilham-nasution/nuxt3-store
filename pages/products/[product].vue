@@ -19,13 +19,13 @@
         <div class="card-body">
           <div class="flex justify-between">
             <h1
-              class="text-4xl font-bold"
+              class="text-2xl lg:text-4xl font-bold"
               :class="{ 'animate-pulse bg-slate-200 h-10 w-72': isLoading }"
             >
               {{ product.title }}
             </h1>
             <h1
-              class="text-4xl font-bold"
+              class="text-2xl lg:text-4xl font-bold"
               :class="{ 'animate-pulse bg-slate-200 h-10 w-48': isLoading }"
             >
               {{ isLoading ? "" : useCurrencyIDR(product.price) }}

@@ -12,7 +12,7 @@
     />
     <select
       @change="handleFilterBrand"
-      class="select select-ghost w-36 focus:outline-none"
+      class="select select-ghost w-28 focus:outline-none"
       v-model="brandSelected"
     >
       <option disabled selected value="null">Brand</option>
@@ -21,14 +21,14 @@
         {{ brand.name }}
       </option>
     </select>
-    <select class="select select-ghost w-36 focus:outline-none">
+    <select class="select select-ghost w-28 focus:outline-none">
       <option disabled selected>Size</option>
       <option>All</option>
       <option v-for="size in sizes">
         {{ size.size }}
       </option>
     </select>
-    <select class="select select-ghost w-36 focus:outline-none">
+    <select class="select select-ghost w-28 focus:outline-none">
       <option disabled selected>Color</option>
       <option>All</option>
       <option v-for="color in colors">
@@ -36,7 +36,7 @@
       </option>
     </select>
     <div class="container mx-auto my-5">
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <TransitionGroup name="product">
           <div v-for="product in products" :key="product.id">
             <NuxtLink :to="'products/' + product.slug">
