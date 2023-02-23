@@ -25,7 +25,7 @@
         >Add Product</NuxtLink
       >
     </div>
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-1 md:grid-cols-2">
       <TransitionGroup name="product">
         <div
           v-for="product in products"

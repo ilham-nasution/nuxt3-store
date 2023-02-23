@@ -1,12 +1,10 @@
 <template>
   <div class="text-center">
     <h1 v-if="stores.length" class="text-3xl font-bold">Choose your store</h1>
-    <div class="flex justify-center items-center">
-      <NuxtLink
-        v-for="store in stores"
-        :to="'stores/' + store.slug"
-        class="m-12"
-      >
+    <div
+      class="flex flex-col md:flex-row justify-center items-center gap-5 my-5"
+    >
+      <NuxtLink v-for="store in stores" :to="'stores/' + store.slug">
         <div class="avatar">
           <div
             class="w-36 rounded ring ring-primary ring-offset-base-100 ring-offset-2"
