@@ -78,13 +78,71 @@
         </label>
         <div
           tabindex="0"
-          class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow"
+          class="mt-3 card card-compact dropdown-content w-96 bg-base-100 shadow"
         >
           <div class="card-body">
-            <span class="font-bold text-lg">{{ cartCounter }} Items</span>
-            <span class="text-info"
-              >Subtotal: {{ useCurrencyIDR(cartTotal) }}</span
+            <span class="font-bold text-lg">Your Cart</span>
+            <div
+              v-for="product in cartProducts"
+              :key="product.id"
+              class="flex items-center justify-between"
             >
+              <div class="flex items-center">
+                <div class="avatar mr-3">
+                  <div class="w-10 rounded">
+                    <nuxt-img
+                      format="webp"
+                      class="!object-scale-down"
+                      :src="product.products.image_url"
+                      :alt="product.products.title"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <p>{{ product.products.title }}</p>
+                  <div class="flex items-center">
+                    <button class="btn btn-circle btn-outline btn-xs">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="{1.5}"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M18 12H6"
+                        />
+                      </svg>
+                    </button>
+                    <span class="mx-3">{{ product.quantity }}</span>
+                    <button class="btn btn-circle btn-outline btn-xs">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="{1.5}"
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6v12m6-6H6"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <span>{{ useCurrencyIDR(product.products.price) }}</span>
+            </div>
+            <div class="flex justify-between mt-5 font-bold text-xl">
+              <span>Subtotal</span>
+              <span>{{ useCurrencyIDR(cartTotal) }}</span>
+            </div>
             <div class="card-actions">
               <button class="btn btn-primary btn-block">View cart</button>
             </div>
@@ -105,6 +163,7 @@ const client = useSupabaseAuthClient();
 const user = useSupabaseUser();
 const cartCounter = useCartCounter();
 const cartTotal = useCartTotal();
+const cartProducts = useCartProducts();
 
 await useAsyncData("cart", async () => {
   const { data } = await client
@@ -114,6 +173,13 @@ await useAsyncData("cart", async () => {
 
   cartCounter.value = data[0].total_item;
   cartTotal.value = data[0].total_price;
+
+  const { data: dbCartProducts } = await client
+    .from("user_cart_products")
+    .select(`*, products("*")`)
+    .eq("user_id", user.value.id);
+
+  cartProducts.value = dbCartProducts;
 });
 
 async function handleLogout() {

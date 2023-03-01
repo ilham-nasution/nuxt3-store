@@ -19,7 +19,7 @@
         </div>
         <span>{{ shopName }}</span>
       </div>
-      <p class="font-bold">{{ title }}</p>
+      <p class="font-bold truncate">{{ title }}</p>
       <p>
         {{ price }}
       </p>

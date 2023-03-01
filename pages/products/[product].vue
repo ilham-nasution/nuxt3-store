@@ -35,7 +35,13 @@
             {{ product.description }}
           </p>
           <div class="card-actions justify-end">
-            <button @click="handleCart" class="btn btn-primary">Buy</button>
+            <button
+              @click="handleCart"
+              class="btn btn-primary"
+              :class="{ 'btn-disabled': inCart }"
+            >
+              {{ inCart ? "Already in cart" : "Buy" }}
+            </button>
           </div>
         </div>
       </div>
@@ -49,6 +55,7 @@ const user = useSupabaseUser();
 const route = useRoute();
 const cartCounter = useCartCounter();
 const cartTotal = useCartTotal();
+const cartProducts = useCartProducts();
 
 interface Product {
   brand_id: number;
@@ -72,6 +79,7 @@ const product = ref<Product>({
   title: "",
 });
 const isLoading = ref<boolean>(true);
+const inCart = ref<boolean>(false);
 
 onMounted(async () => {
   const { data } = await client
@@ -80,6 +88,11 @@ onMounted(async () => {
     .eq("slug", route.params.product);
 
   product.value = data[0];
+  cartProducts.value.map((item) => {
+    if (item.product_id === product.value.id) {
+      inCart.value = true;
+    }
+  });
   isLoading.value = false;
 });
 
@@ -99,11 +112,18 @@ const handleCart = async () => {
         },
         { onConflict: "user_id" }
       );
-      await client.from("user_cart_products").insert({
-        user_id: user.value.id,
-        product_id: product.value.id,
-      });
+      const { data } = await client
+        .from("user_cart_products")
+        .insert({
+          user_id: user.value.id,
+          product_id: product.value.id,
+        })
+        .select(`*, products("*")`);
+
+      cartProducts.value.push(data[0]);
     });
+
+    inCart.value = true;
   }
 };
 </script>
