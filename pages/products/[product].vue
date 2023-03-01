@@ -38,7 +38,10 @@
             <button
               @click="handleCart"
               class="btn btn-primary"
-              :class="{ 'btn-disabled': inCart }"
+              :class="{
+                'btn-disabled': inCart || isBtnLoading,
+                loading: isBtnLoading,
+              }"
             >
               {{ inCart ? "Already in cart" : "Buy" }}
             </button>
@@ -80,6 +83,7 @@ const product = ref<Product>({
 });
 const isLoading = ref<boolean>(true);
 const inCart = ref<boolean>(false);
+const isBtnLoading = ref<boolean>(false);
 
 onMounted(async () => {
   const { data } = await client
@@ -100,6 +104,7 @@ const handleCart = async () => {
   if (!user.value) {
     await navigateTo("/login");
   } else {
+    isBtnLoading.value = true;
     cartCounter.value++;
     cartTotal.value = cartTotal.value + product.value.price;
 
@@ -122,7 +127,7 @@ const handleCart = async () => {
 
       cartProducts.value.push(data[0]);
     });
-
+    isBtnLoading.value = false;
     inCart.value = true;
   }
 };

@@ -102,37 +102,11 @@
                   <p>{{ product.products.title }}</p>
                   <div class="flex items-center">
                     <button class="btn btn-circle btn-outline btn-xs">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="{1.5}"
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M18 12H6"
-                        />
-                      </svg>
+                      <MinusSmallIcon class="w-4" />
                     </button>
                     <span class="mx-3">{{ product.quantity }}</span>
                     <button class="btn btn-circle btn-outline btn-xs">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="{1.5}"
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6v12m6-6H6"
-                        />
-                      </svg>
+                      <PlusSmallIcon class="w-4" />
                     </button>
                   </div>
                 </div>
@@ -157,7 +131,11 @@
 </template>
 
 <script setup>
-import { UserIcon } from "@heroicons/vue/24/outline";
+import {
+  UserIcon,
+  PlusSmallIcon,
+  MinusSmallIcon,
+} from "@heroicons/vue/24/outline";
 
 const client = useSupabaseAuthClient();
 const user = useSupabaseUser();
