@@ -53,12 +53,15 @@
 </template>
 
 <script setup lang="ts">
+import { useCartStore } from "@/stores/cart";
+import { storeToRefs } from "pinia";
+
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const route = useRoute();
-const cartCounter = useCartCounter();
-const cartTotal = useCartTotal();
-const cartProducts = useCartProducts();
+const store = useCartStore();
+const { addProduct, incrementCounter, sumTotal } = store;
+const { counter, total, products } = storeToRefs(store);
 
 interface Product {
   brand_id: number;
@@ -92,7 +95,7 @@ onMounted(async () => {
     .eq("slug", route.params.product);
 
   product.value = data[0];
-  cartProducts.value.map((item) => {
+  products.value.map((item) => {
     if (item.product_id === product.value.id) {
       inCart.value = true;
     }
@@ -105,27 +108,19 @@ const handleCart = async () => {
     await navigateTo("/login");
   } else {
     isBtnLoading.value = true;
-    cartCounter.value++;
-    cartTotal.value = cartTotal.value + product.value.price;
+    incrementCounter();
+    sumTotal(product.value.price);
 
     await useAsyncData("cart", async () => {
       await client.from("user_carts").upsert(
         {
           user_id: user.value.id,
-          total_item: cartCounter.value,
-          total_price: cartTotal.value,
+          total_item: counter.value,
+          total_price: total.value,
         },
         { onConflict: "user_id" }
       );
-      const { data } = await client
-        .from("user_cart_products")
-        .insert({
-          user_id: user.value.id,
-          product_id: product.value.id,
-        })
-        .select(`*, products("*")`);
-
-      cartProducts.value.push(data[0]);
+      addProduct(user.value.id, product.value.id);
     });
     isBtnLoading.value = false;
     inCart.value = true;

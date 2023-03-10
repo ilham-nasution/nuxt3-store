@@ -73,7 +73,7 @@
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
               />
             </svg>
-            <span class="badge badge-sm indicator-item">{{ cartCounter }}</span>
+            <span class="badge badge-sm indicator-item">{{ counter }}</span>
           </div>
         </label>
         <div
@@ -83,7 +83,7 @@
           <div class="card-body">
             <span class="font-bold text-lg">Your Cart</span>
             <div
-              v-for="product in cartProducts"
+              v-for="product in products"
               :key="product.id"
               class="flex items-center justify-between"
             >
@@ -115,7 +115,7 @@
             </div>
             <div class="flex justify-between mt-5 font-bold text-xl">
               <span>Subtotal</span>
-              <span>{{ useCurrencyIDR(cartTotal) }}</span>
+              <span>{{ useCurrencyIDR(total) }}</span>
             </div>
             <div class="card-actions">
               <button class="btn btn-primary btn-block">View cart</button>
@@ -136,12 +136,13 @@ import {
   PlusSmallIcon,
   MinusSmallIcon,
 } from "@heroicons/vue/24/outline";
+import { useCartStore } from "@/stores/cart";
+import { storeToRefs } from "pinia";
 
+const store = useCartStore();
+const { counter, total, products } = storeToRefs(store);
 const client = useSupabaseAuthClient();
 const user = useSupabaseUser();
-const cartCounter = useCartCounter();
-const cartTotal = useCartTotal();
-const cartProducts = useCartProducts();
 
 await useAsyncData("cart", async () => {
   const { data } = await client
@@ -149,15 +150,15 @@ await useAsyncData("cart", async () => {
     .select("*")
     .eq("user_id", user.value.id);
 
-  cartCounter.value = data[0].total_item;
-  cartTotal.value = data[0].total_price;
+  counter.value = data[0].total_item;
+  total.value = data[0].total_price;
 
   const { data: dbCartProducts } = await client
     .from("user_cart_products")
     .select(`*, products("*")`)
     .eq("user_id", user.value.id);
 
-  cartProducts.value = dbCartProducts;
+  products.value = dbCartProducts;
 });
 
 async function handleLogout() {
