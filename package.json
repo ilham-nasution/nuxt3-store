@@ -5,13 +5,16 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
     "@nuxtjs/supabase": "^0.3.0",
     "autoprefixer": "^10.4.13",
     "nuxt": "^3.2.2",
+    "nuxt-vitest": "^0.6.8",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4"
   },
