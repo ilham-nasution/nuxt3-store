@@ -17,7 +17,9 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.14",
+    "@pinia/nuxt": "^0.4.7",
     "@supabase/supabase-js": "^2.4.0",
-    "daisyui": "^2.47.0"
+    "daisyui": "^2.47.0",
+    "pinia": "^2.0.33"
   }
 }
