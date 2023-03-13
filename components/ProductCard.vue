@@ -1,7 +1,7 @@
 <template>
   <div class="card bg-base-100 shadow-xl">
-    <figure class="h-96">
-      <nuxt-img format="webp" :src="img" alt="Shoes" class="object-cover" />
+    <figure class="h-80">
+      <nuxt-img format="webp" :src="img" alt="Shoes" sizes="sm:100vw md:50vw lg:400px" />
     </figure>
     <div class="card-body">
       <div class="flex items-center mb-3">
