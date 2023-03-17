@@ -11,4 +11,7 @@ export default defineNuxtConfig({
   image: {
     domains: ["https://hipydpadmuujyavkgdtr.supabase.co"],
   },
+  build: {
+    transpile: ["@vuepic/vue-datepicker"],
+  },
 });

@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
-    <div class="flex justify-between">
-      <div>
-        <h1 class="text-xl">Delivery Information</h1>
+  <div class="container mx-auto mb-10">
+    <div class="flex justify-between gap-3">
+      <div class="grow">
+        <h1 class="text-xl mb-3 font-bold">Delivery Information</h1>
         <div class="card shadow-xl">
           <div class="card-body">
             <div class="grid grid-cols-2 gap-3">
@@ -14,43 +14,31 @@
             </div>
           </div>
         </div>
-        <h1 class="text-xl">Schedule Delivery</h1>
+        <h1 class="text-xl my-3 font-bold">Schedule Delivery</h1>
         <div class="card shadow-xl">
           <div class="card-body">
-            <TextInput label="Dates" />
+            <label class="label-text">Date</label>
+            <VueDatePicker
+              v-model="date"
+              :min-date="new Date()"
+              :enable-time-picker="false"
+            ></VueDatePicker>
             <TextInput label="Notes" />
           </div>
         </div>
-        <h1 class="text-xl">Payment Method</h1>
+        <h1 class="text-xl my-3 font-bold">Payment Method</h1>
         <div class="card shadow-xl">
           <div class="card-body">
-            <div class="form-control">
-              <label class="label cursor-pointer">
-                <span class="label-text">Red pill</span>
-                <input
-                  type="radio"
-                  name="radio-10"
-                  class="radio checked:bg-red-500"
-                  checked
-                />
-              </label>
-            </div>
-            <div class="form-control">
-              <label class="label cursor-pointer">
-                <span class="label-text">Blue pill</span>
-                <input
-                  type="radio"
-                  name="radio-10"
-                  class="radio checked:bg-blue-500"
-                  checked
-                />
-              </label>
+            <div class="flex gap-5">
+              <RadioBtn label="Credit Card" checked="true" />
+              <RadioBtn label="QRIS" />
+              <RadioBtn label="Cash On Delivery" />
             </div>
           </div>
         </div>
       </div>
       <div>
-        <h1 class="text-xl">Order Summary</h1>
+        <h1 class="text-xl mb-3 font-bold">Order Summary</h1>
         <div class="card shadow-xl">
           <div class="card-body">
             <div
@@ -101,10 +89,13 @@
 </template>
 
 <script setup>
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import { PlusSmallIcon, MinusSmallIcon } from "@heroicons/vue/24/outline";
 import { useCartStore } from "@/stores/cart";
 import { storeToRefs } from "pinia";
 
 const store = useCartStore();
 const { counter, total, products } = storeToRefs(store);
+const date = ref("");
 </script>
