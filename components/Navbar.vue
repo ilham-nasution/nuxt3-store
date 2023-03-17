@@ -118,7 +118,9 @@
               <span>{{ useCurrencyIDR(total) }}</span>
             </div>
             <div class="card-actions">
-              <button class="btn btn-primary btn-block">View cart</button>
+              <NuxtLink to="/cart" class="btn btn-primary btn-block"
+                >Checkout</NuxtLink
+              >
             </div>
           </div>
         </div>
